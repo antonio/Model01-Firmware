@@ -222,18 +222,18 @@ KEYMAPS(
 #elif defined (PRIMARY_KEYMAP_CUSTOM)
   // Edit this keymap to make a custom layout
   [PRIMARY] = KEYMAP_STACKED
-  (Key_Backtick    , Key_1         , Key_2      , Key_3        , Key_4, Key_5, Key_6      ,
-   Key_Tab         , Key_Q         , Key_W      , Key_E        , Key_R, Key_T, Key_LeftBracket    ,
-   Key_PageUp      , Key_A         , Key_S      , Key_D        , Key_F, Key_G,
-   Key_LeftShift   , Key_Z         , Key_X      , Key_C        , Key_V, Key_B, Key_Escape ,
+  (Key_Backtick    , Key_1         , Key_2      , Key_3        , Key_4, Key_5, Key_6               ,
+   Key_Tab         , Key_Q         , Key_W      , Key_E        , Key_R, Key_T, Key_LeftBracket     ,
+   Key_Escape      , Key_A         , Key_S      , Key_D        , Key_F, Key_G,
+   Key_LeftShift   , Key_Z         , Key_X      , Key_C        , Key_V, Key_B, Key_KeypadLeftParen ,
    Key_LeftControl , Key_Backspace , Key_LeftGui, Key_LeftShift,
    ShiftToLayer(FUNCTION),
 
-   Key_7          , Key_8      , Key_9       , Key_0           , Key_Minus    , Key_Equals   , Key_Backspace,
-   Key_Enter      , Key_Y      , Key_U       , Key_I           , Key_O        , Key_P        , Key_Equals   ,
-   Key_H          , Key_J      , Key_K       , Key_L           , Key_Semicolon, Key_Quote    ,
-   Key_RightAlt   , Key_N      , Key_M       , Key_Comma       , Key_Period   ,    Key_Slash , Key_Minus    ,
-   Key_RightShift , Key_LeftAlt, Key_Spacebar, Key_RightControl,
+   Key_7                , Key_8      , Key_9       , Key_0           , Key_Minus    , Key_Equals   , Key_Backspace,
+   Key_RightBracket     , Key_Y      , Key_U       , Key_I           , Key_O        , Key_P        , Key_Equals   ,
+   Key_H                , Key_J      , Key_K       , Key_L           , Key_Semicolon, Key_Quote    ,
+   Key_KeypadRightParen , Key_N      , Key_M       , Key_Comma       , Key_Period   ,    Key_Slash , Key_Minus    ,
+   Key_RightShift       , Key_LeftAlt, Key_Spacebar, Key_RightControl,
    ShiftToLayer(FUNCTION)),
 
 #else
@@ -428,6 +428,10 @@ USE_MAGIC_COMBOS({.action = toggleKeyboardProtocol,
 // The order can be important. For example, LED effects are
 // added in the order they're listed here.
 KALEIDOSCOPE_INIT_PLUGINS(
+  // overload keys on your keyboard so that they produce one keycode
+  // (i.e. symbol) when tapped, and a different keycode -- most likely
+  // a modifier (e.g. `shift` or `alt`) -- when held.
+  Qukeys,
   // The EEPROMSettings & EEPROMKeymap plugins make it possible to have an
   // editable keymap in EEPROM.
   EEPROMSettings,
@@ -507,9 +511,7 @@ KALEIDOSCOPE_INIT_PLUGINS(
   // comfortable - or able - to do automatically, but can be useful
   // nevertheless. Such as toggling the key report protocol between Boot (used
   // by BIOSes) and Report (NKRO).
-  USBQuirks,
-
-  Qukeys
+  USBQuirks
 );
 
 /** The 'setup' function is one of the two standard Arduino sketch functions.
@@ -533,12 +535,14 @@ void setup() {
   // The LED Stalker mode has a few effects. The one we like is called
   // 'BlazingTrail'. For details on other options, see
   // https://github.com/keyboardio/Kaleidoscope/blob/master/doc/plugin/LED-Stalker.md
-  StalkerEffect.variant = STALKER(BlazingTrail);
+  // StalkerEffect.variant = STALKER(BlazingTrail);
+  StalkerEffect.variant = STALKER(Haunt, (CRGB(0, 0, 200)));
+  StalkerEffect.activate();
 
   // We want to make sure that the firmware starts with LED effects off
   // This avoids over-taxing devices that don't have a lot of power to share
   // with USB devices
-  LEDOff.activate();
+  // LEDOff.activate();
 
   // To make the keymap editable without flashing new firmware, we store
   // additional layers in EEPROM. For now, we reserve space for five layers. If
@@ -551,6 +555,12 @@ void setup() {
   // maps for. To make things simple, we set it to five layers, which is how
   // many editable layers we have (see above).
   ColormapEffect.max_layers(5);
+
+  QUKEYS(
+    kaleidoscope::plugin::Qukey(0, KeyAddr(2, 0), Key_LeftControl),  // Escape/Ctrl
+  )
+  Qukeys.setHoldTimeout(1000);
+  Qukeys.setOverlapThreshold(50);
 }
 
 /** loop is the second of the standard Arduino sketch functions.

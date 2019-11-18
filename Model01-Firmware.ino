@@ -233,8 +233,8 @@ KEYMAPS(
    ShiftToLayer(FUNCTION),
 
    Key_7                , Key_8      , Key_9       , Key_0           , Key_Minus    , Key_Equals       , Key_Backspace  ,
-   Key_RightBracket     , Key_Y      , Key_U       , Key_I           , Key_O        , Key_P            , Key_Quote      ,
-   Key_H                , Key_J      , Key_K       , Key_L           , Key_Semicolon, Key_Backslash ,
+   Key_RightBracket     , Key_Y      , Key_U       , Key_I           , Key_O        , Key_P            , Key_Backslash      ,
+   Key_H                , Key_J      , Key_K       , Key_L           , Key_Semicolon, Key_Quote ,
    Key_KeypadRightParen , Key_N      , Key_M       , Key_Comma       , Key_Period   , Key_Slash        , Key_RightShift ,
    ___                  , Key_Enter  , Key_Spacebar, ___,
    ShiftToLayer(FUNCTION)),
@@ -567,7 +567,7 @@ void setup() {
 
   QUKEYS(
     kaleidoscope::plugin::Qukey(0, KeyAddr(2, 0), Key_LeftControl),  // Escape/Ctrl
-    kaleidoscope::plugin::Qukey(0, KeyAddr(2, 15), Key_RightControl),  // Backslash/Ctrl
+    kaleidoscope::plugin::Qukey(0, KeyAddr(2, 15), Key_RightControl),  // Quote/Ctrl
     kaleidoscope::plugin::Qukey(0, KeyAddr(1, 8), Key_Hyper),        // Space/Hyper
   )
   Qukeys.setHoldTimeout(1000);

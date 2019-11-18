@@ -87,8 +87,11 @@
   * a macro key is pressed.
   */
 
-enum { MACRO_VERSION_INFO,
-       MACRO_ANY
+enum {
+        MACRO_VERSION_INFO,
+        MACRO_ANY,
+        MACRO_PREV_TAB,
+        MACRO_NEXT_TAB,
      };
 
 
@@ -260,11 +263,11 @@ KEYMAPS(
    ___),
 
   [FUNCTION] =  KEYMAP_STACKED
-  (___, Key_F1, Key_F2, Key_F3, Key_F4, Key_F5, Key_F6,
-   ___, ___   , ___   , ___   , ___   , ___   , ___   ,
-   ___, ___   , ___   , ___   , ___   , ___   ,
-   ___, ___   , ___   , ___   , ___   , ___   , ___   ,
-   ___, ___   , ___   , ___   ,
+  (___, Key_F1, Key_F2, Key_F3            , Key_F4            , Key_F5, Key_F6,
+   ___, ___   , ___   , ___               , ___               , ___   , ___   ,
+   ___, ___   , ___   , M(MACRO_PREV_TAB) , M(MACRO_NEXT_TAB) , ___   ,
+   ___, ___   , ___   , ___               , ___               , ___   , ___   ,
+   ___, ___   , ___   , ___               ,
    ___,
 
    Key_F7                      , Key_F8       , Key_F9              , Key_F10              , Key_F11        , Key_F12         , ___,
@@ -310,7 +313,6 @@ static void anyKeyMacro(uint8_t keyState) {
     kaleidoscope::hid::pressKey(lastKey, toggledOn);
 }
 
-
 /** macroAction dispatches keymap events that are tied to a macro
     to that macro. It takes two uint8_t parameters.
 
@@ -333,7 +335,14 @@ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
   case MACRO_ANY:
     anyKeyMacro(keyState);
     break;
+
+  case MACRO_PREV_TAB:
+          return MACRODOWN(D(LeftControl), D(LeftShift), D(Tab), U(LeftControl), U(LeftShift), U(Tab));
+
+  case MACRO_NEXT_TAB:
+          return MACRODOWN(D(LeftControl), D(Tab), U(LeftControl), U(Tab));
   }
+
   return MACRO_NONE;
 }
 

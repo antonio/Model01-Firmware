@@ -558,6 +558,7 @@ void setup() {
 
   QUKEYS(
     kaleidoscope::plugin::Qukey(0, KeyAddr(2, 0), Key_LeftControl),  // Escape/Ctrl
+    kaleidoscope::plugin::Qukey(0, KeyAddr(1, 8), Key_Hyper),        // Space/Hyper
   )
   Qukeys.setHoldTimeout(1000);
   Qukeys.setOverlapThreshold(50);

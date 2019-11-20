@@ -90,8 +90,6 @@
 enum {
         MACRO_VERSION_INFO,
         MACRO_ANY,
-        MACRO_PREV_TAB,
-        MACRO_NEXT_TAB,
      };
 
 
@@ -225,18 +223,18 @@ KEYMAPS(
 #elif defined (PRIMARY_KEYMAP_CUSTOM)
   // Edit this keymap to make a custom layout
   [PRIMARY] = KEYMAP_STACKED
-  (Key_Backtick  , Key_1      , Key_2    , Key_3 , Key_4, Key_5, Key_6               ,
-   Key_Tab       , Key_Q      , Key_W    , Key_E , Key_R, Key_T, Key_LeftBracket     ,
-   Key_Escape    , Key_A      , Key_S    , Key_D , Key_F, Key_G,
-   Key_LeftShift , Key_Z      , Key_X    , Key_C , Key_V, Key_B, Key_KeypadLeftParen ,
+  (Key_Backtick  , Key_1      , Key_2    , Key_3 , Key_4                    , Key_5, Key_6           ,
+   Key_Tab       , Key_Q      , Key_W    , Key_E , Key_R                    , Key_T, Key_LeftBracket ,
+   Key_Escape    , Key_A      , Key_S    , Key_D , Key_F                    , Key_G,
+   Key_LeftShift , Key_Z      , Key_X    , Key_C , Key_V                    , Key_B, Key_LeftParen   ,
    Key_LeftAlt   , Key_LeftGui, Key_Hyper, ___   , // Another function layer, for gaming?
    ShiftToLayer(FUNCTION),
 
-   Key_7                , Key_8      , Key_9       , Key_0           , Key_Minus    , Key_Equals       , Key_Backspace  ,
-   Key_RightBracket     , Key_Y      , Key_U       , Key_I           , Key_O        , Key_P            , Key_Backslash      ,
-   Key_H                , Key_J      , Key_K       , Key_L           , Key_Semicolon, Key_Quote ,
-   Key_KeypadRightParen , Key_N      , Key_M       , Key_Comma       , Key_Period   , Key_Slash        , Key_RightShift ,
-   ___                  , Key_Enter  , Key_Spacebar, ___,
+   Key_7            , Key_8     , Key_9       , Key_0     , Key_Minus    , Key_Equals , Key_Backspace  ,
+   Key_RightBracket , Key_Y     , Key_U       , Key_I     , Key_O        , Key_P      , Key_Backslash  ,
+   Key_H            , Key_J     , Key_K       , Key_L     , Key_Semicolon, Key_Quote  ,
+   Key_RightParen   , Key_N     , Key_M       , Key_Comma , Key_Period   , Key_Slash  , Key_RightShift ,
+   ___              , Key_Enter , Key_Spacebar, ___       ,
    ShiftToLayer(FUNCTION)),
 
 #else
@@ -263,11 +261,11 @@ KEYMAPS(
    ___),
 
   [FUNCTION] =  KEYMAP_STACKED
-  (___, Key_F1, Key_F2, Key_F3            , Key_F4            , Key_F5, Key_F6,
-   ___, ___   , ___   , ___               , ___               , ___   , ___   ,
-   ___, ___   , ___   , M(MACRO_PREV_TAB) , M(MACRO_NEXT_TAB) , ___   ,
-   ___, ___   , ___   , ___               , ___               , ___   , ___   ,
-   ___, ___   , ___   , ___               ,
+  (___, Key_F1, Key_F2, Key_F3                 , Key_F4         , Key_F5, Key_F6,
+   ___, ___   , ___   , ___                    , ___            , ___   , ___   ,
+   ___, ___   , ___   , LCTRL(LSHIFT(Key_Tab)) , LCTRL(Key_Tab) , ___   ,
+   ___, ___   , ___   , ___                    , ___            , ___   , ___   ,
+   ___, ___   , ___   , ___                    ,
    ___,
 
    Key_F7                      , Key_F8       , Key_F9              , Key_F10              , Key_F11        , Key_F12         , ___,
@@ -336,11 +334,6 @@ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
     anyKeyMacro(keyState);
     break;
 
-  case MACRO_PREV_TAB:
-          return MACRODOWN(D(LeftControl), D(LeftShift), D(Tab), U(LeftControl), U(LeftShift), U(Tab));
-
-  case MACRO_NEXT_TAB:
-          return MACRODOWN(D(LeftControl), D(Tab), U(LeftControl), U(Tab));
   }
 
   return MACRO_NONE;
@@ -569,7 +562,7 @@ void setup() {
     kaleidoscope::plugin::Qukey(0, KeyAddr(2, 0), Key_LeftControl),  // Escape/Ctrl
     kaleidoscope::plugin::Qukey(0, KeyAddr(2, 15), Key_RightControl),  // Quote/Ctrl
     kaleidoscope::plugin::Qukey(0, KeyAddr(1, 8), Key_Hyper),        // Space/Hyper
-  )
+         );
 }
 
 /** loop is the second of the standard Arduino sketch functions.

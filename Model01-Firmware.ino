@@ -268,11 +268,11 @@ KEYMAPS(
    ___, ___   , ___   , ___                    ,
    ___,
 
-   Key_F7                      , Key_F8       , Key_F9              , Key_F10              , Key_F11        , Key_F12         , ___,
-   ___                         , ___          , Key_LeftCurlyBracket, Key_RightCurlyBracket, Key_LeftBracket, Key_RightBracket, ___,
-                  Key_LeftArrow, Key_DownArrow, Key_UpArrow         , Key_RightArrow       ,  ___           , ___             ,
-   ___                         , ___          , ___                 , ___                  , ___            , ___             , ___,
-   ___                         , ___          , ___                 , ___                  ,
+   Key_F7                      , Key_F8       , Key_F9                  , Key_F10              , Key_F11        , Key_F12         , ___,
+   ___                         , ___          , Key_LeftCurlyBracket    , Key_RightCurlyBracket, Key_LeftBracket, Key_RightBracket, ___,
+                  Key_LeftArrow, Key_DownArrow, Key_UpArrow             , Key_RightArrow       ,  ___           , ___             ,
+   ___                         , ___          , Consumer_PlaySlashPause , ___                  , ___            , ___             , ___,
+   ___                         , ___          , ___                     , ___                  ,
    ___)
 ) // KEYMAPS(
 

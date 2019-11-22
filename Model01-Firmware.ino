@@ -142,7 +142,7 @@ enum {
   *
   */
 
-enum { PRIMARY, FUNCTION, GAMING, GAMING_RIGHT, NUMPAD }; // layers
+enum { PRIMARY, FUNCTION, NUMPAD, GAMING, GAMING_ALT, GAMING_FN }; // layers
 
 
 /**
@@ -259,36 +259,6 @@ KEYMAPS(
    LockLayer(GAMING)                         , ___          , ___                     , ___                  ,
    ___),
 
-  [GAMING] = KEYMAP_STACKED
-  (Key_Backtick  , Key_1      , Key_2    , Key_3 , Key_4                    , Key_5, Key_6           ,
-   Key_Tab       , Key_Q      , Key_W    , Key_E , Key_R                    , Key_T, Key_LeftBracket ,
-   Key_Escape    , Key_A      , Key_S    , Key_D , Key_F                    , Key_G,
-   Key_LeftShift , Key_Z      , Key_X    , Key_C , Key_V                    , Key_B, Key_LeftParen   ,
-   Key_LeftAlt   , Key_Spacebar, Key_LeftShift, ShiftToLayer(FUNCTION),
-   ShiftToLayer(GAMING_RIGHT),
-
-   Key_7            , Key_8     , Key_9       , Key_0     , Key_Minus    , Key_Equals , Key_Backspace  ,
-   Key_RightBracket , Key_Y     , Key_U       , Key_I     , Key_O        , Key_P      , Key_Backslash  ,
-   Key_H            , Key_J     , Key_K       , Key_L     , Key_Semicolon, Key_Quote  ,
-   Key_RightParen   , Key_N     , Key_M       , Key_Comma , Key_Period   , Key_Slash  , Key_RightShift ,
-   ___              , Key_Enter , Key_Spacebar, Key_RightAlt,
-   ShiftToLayer(FUNCTION)),
-
-  [GAMING_RIGHT] = KEYMAP_STACKED
-  (Key_Backtick  , Key_1      , Key_2    , Key_3 , Key_4                    , Key_5, Key_6           ,
-   Key_Tab       , Key_Q      , Key_W    , Key_E , Key_R                    , Key_T, Key_LeftBracket ,
-   Key_Escape    , Key_A      , Key_S    , Key_D , Key_F                    , Key_G,
-   Key_LeftShift , Key_Z      , Key_X    , Key_C , Key_V                    , Key_B, Key_LeftParen   ,
-   Key_LeftAlt   , Key_Spacebar, Key_LeftShift, ShiftToLayer(FUNCTION),
-   ___,
-
-   Key_7            , Key_8     , Key_9       , Key_0     , Key_Minus    , Key_Equals , Key_Backspace  ,
-   Key_RightBracket , Key_Y     , Key_U       , Key_I     , Key_O        , Key_P      , Key_Backslash  ,
-   Key_H            , Key_J     , Key_K       , Key_L     , Key_Semicolon, Key_Quote  ,
-   Key_RightParen   , Key_N     , Key_M       , Key_Comma , Key_Period   , Key_Slash  , Key_RightShift ,
-   LockLayer(PRIMARY)              , Key_Enter , Key_Spacebar, Key_RightAlt,
-   ___),
-
   [NUMPAD] =  KEYMAP_STACKED
   (___, ___, ___, ___, ___, ___, ___,
    ___, ___, ___, ___, ___, ___, ___,
@@ -302,43 +272,58 @@ KEYMAPS(
                           ___  , Key_4, Key_5, Key_6, ___, ___,
    ___                  , ___  , Key_1, Key_2, Key_3, ___, ___,
    ___                  , ___  , ___  , Key_0,
+   ___),
+
+  [GAMING] = KEYMAP_STACKED
+  (Key_Backtick  , Key_1       , Key_2      , Key_3                  , Key_4 , Key_5, Key_6           ,
+   Key_Tab       , Key_Q       , Key_W      , Key_E                  , Key_R , Key_T, Key_LeftBracket ,
+   Key_Escape    , Key_A       , Key_S      , Key_D                  , Key_F , Key_G,
+   Key_LeftShift , Key_Z       , Key_X      , Key_C                  , Key_V , Key_B, Key_LeftParen   ,
+   Key_LeftAlt   , Key_Spacebar, Key_LeftAlt, ShiftToLayer(GAMING_FN),
+   ShiftToLayer(GAMING_ALT),
+
+   Key_7            , Key_8     , Key_9       , Key_0     , Key_Minus    , Key_Equals , Key_Backspace  ,
+   Key_RightBracket , Key_Y     , Key_U       , Key_I     , Key_O        , Key_P      , Key_Backslash  ,
+   Key_H            , Key_J     , Key_K       , Key_L     , Key_Semicolon, Key_Quote  ,
+   Key_RightParen   , Key_N     , Key_M       , Key_Comma , Key_Period   , Key_Slash  , Key_RightShift ,
+   ___              , Key_Enter , Key_Spacebar, Key_RightAlt,
+   ShiftToLayer(FUNCTION)),
+
+  [GAMING_ALT] = KEYMAP_STACKED
+  (Key_7            , Key_8       , Key_9      , Key_0                  , Key_Minus    , Key_Equals , Key_Backspace  ,
+   Key_RightBracket , Key_Y       , Key_U      , Key_I                  , Key_O        , Key_P      , Key_Backslash  ,
+   Key_H            , Key_J       , Key_K      , Key_L                  , Key_Semicolon, Key_Quote  ,
+   Key_RightParen   , Key_N       , Key_M      , Key_Comma              , Key_Period   , Key_Slash  , Key_RightShift ,
+   Key_LeftAlt      , Key_Spacebar, Key_LeftAlt, ShiftToLayer(GAMING_FN),
+   ___,
+
+   Key_Backtick  , Key_1       , Key_2        , Key_3                 , Key_4 , Key_5, Key_6           ,
+   Key_Tab       , Key_Q       , Key_W        , Key_E                 , Key_R , Key_T, Key_LeftBracket ,
+   Key_Escape    , Key_A       , Key_S        , Key_D                 , Key_F , Key_G,
+   Key_LeftShift , Key_Z       , Key_X        , Key_C                 , Key_V , Key_B, Key_LeftParen   ,
+   Key_LeftAlt   , Key_Spacebar, Key_LeftShift, ShiftToLayer(FUNCTION),
+   ___
+   ),
+
+  [GAMING_FN] =  KEYMAP_STACKED
+  (___               , Key_F1, Key_F2, Key_F3 , Key_F4 , Key_F5 , Key_F6    ,
+   Key_F7            , Key_F8, Key_F9, Key_F10, Key_F11, Key_F12, Key_Delete,
+   Key_Escape        , ___   , ___   , ___    , ___    , ___    ,
+   ___               , ___   , ___   , ___    , ___    , ___    , ___       ,
+   LockLayer(PRIMARY), ___   , ___   , ___    ,
+   ___,
+
+   ___, ___, ___, ___, ___, ___, ___,
+   ___, ___, ___, ___, ___, ___, ___,
+   ___, ___, ___, ___, ___, ___,
+   ___, ___, ___, ___, ___, ___, ___,
+   ___, ___, ___, ___,
    ___)
+
 ) // KEYMAPS(
 
 /* Re-enable astyle's indent enforcement */
 // *INDENT-ON*
-
-/** versionInfoMacro handles the 'firmware version info' macro
- *  When a key bound to the macro is pressed, this macro
- *  prints out the firmware build information as virtual keystrokes
- */
-
-static void versionInfoMacro(uint8_t keyState) {
-  if (keyToggledOn(keyState)) {
-    Macros.type(PSTR("Keyboardio Model 01 - Kaleidoscope "));
-    Macros.type(PSTR(BUILD_INFORMATION));
-  }
-}
-
-/** anyKeyMacro is used to provide the functionality of the 'Any' key.
- *
- * When the 'any key' macro is toggled on, a random alphanumeric key is
- * selected. While the key is held, the function generates a synthetic
- * keypress event repeating that randomly selected key.
- *
- */
-
-static void anyKeyMacro(uint8_t keyState) {
-  static Key lastKey;
-  bool toggledOn = false;
-  if (keyToggledOn(keyState)) {
-    lastKey.keyCode = Key_A.keyCode + (uint8_t)(millis() % 36);
-    toggledOn = true;
-  }
-
-  if (keyIsPressed(keyState))
-    kaleidoscope::hid::pressKey(lastKey, toggledOn);
-}
 
 /** macroAction dispatches keymap events that are tied to a macro
     to that macro. It takes two uint8_t parameters.
@@ -354,27 +339,14 @@ static void anyKeyMacro(uint8_t keyState) {
 
 const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
   switch (macroIndex) {
-
-  case MACRO_VERSION_INFO:
-    versionInfoMacro(keyState);
-    break;
-
-  case MACRO_ANY:
-    anyKeyMacro(keyState);
-    break;
-
   }
 
   return MACRO_NONE;
 }
 
-
-
 // These 'solid' color effect definitions define a rainbow of
 // LED color modes calibrated to draw 500mA or less on the
 // Keyboardio Model 01.
-
-
 static kaleidoscope::plugin::LEDSolidColor solidRed(160, 0, 0);
 static kaleidoscope::plugin::LEDSolidColor solidOrange(140, 70, 0);
 static kaleidoscope::plugin::LEDSolidColor solidYellow(130, 100, 0);

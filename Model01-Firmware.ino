@@ -142,7 +142,7 @@ enum {
   *
   */
 
-enum { PRIMARY, NUMPAD, FUNCTION }; // layers
+enum { PRIMARY, FUNCTION, GAMING, GAMING_RIGHT, NUMPAD }; // layers
 
 
 /**
@@ -227,14 +227,14 @@ KEYMAPS(
    Key_Tab       , Key_Q      , Key_W    , Key_E , Key_R                    , Key_T, Key_LeftBracket ,
    Key_Escape    , Key_A      , Key_S    , Key_D , Key_F                    , Key_G,
    Key_LeftShift , Key_Z      , Key_X    , Key_C , Key_V                    , Key_B, Key_LeftParen   ,
-   Key_LeftAlt   , Key_LeftGui, Key_Hyper, ___   , // Another function layer, for gaming?
+   Key_LeftAlt   , Key_LeftGui, Key_Hyper, ShiftToLayer(NUMPAD),
    ShiftToLayer(FUNCTION),
 
    Key_7            , Key_8     , Key_9       , Key_0     , Key_Minus    , Key_Equals , Key_Backspace  ,
    Key_RightBracket , Key_Y     , Key_U       , Key_I     , Key_O        , Key_P      , Key_Backslash  ,
    Key_H            , Key_J     , Key_K       , Key_L     , Key_Semicolon, Key_Quote  ,
    Key_RightParen   , Key_N     , Key_M       , Key_Comma , Key_Period   , Key_Slash  , Key_RightShift ,
-   ___              , Key_Enter , Key_Spacebar, ___       ,
+   ___              , Key_Enter , Key_Spacebar, Key_RightAlt,
    ShiftToLayer(FUNCTION)),
 
 #else
@@ -244,6 +244,50 @@ KEYMAPS(
 #endif
 
 
+  [FUNCTION] =  KEYMAP_STACKED
+  (___, Key_F1, Key_F2, Key_F3                 , Key_F4         , Key_F5, Key_F6,
+   ___, ___   , ___   , ___                    , ___            , ___   , ___   ,
+   ___, ___   , ___   , LCTRL(LSHIFT(Key_Tab)) , LCTRL(Key_Tab) , ___   ,
+   ___, ___   , ___   , ___                    , ___            , ___   , ___   ,
+   ___, ___   , ___   , ___                    ,
+   ___,
+
+   Key_F7                      , Key_F8       , Key_F9                  , Key_F10              , Key_F11        , Key_F12         , Key_Delete,
+   ___                         , ___          , Key_LeftCurlyBracket    , Key_RightCurlyBracket, Key_LeftBracket, Key_RightBracket, ___,
+                  Key_LeftArrow, Key_DownArrow, Key_UpArrow             , Key_RightArrow       ,  ___           , ___             ,
+   ___                         , ___          , Consumer_PlaySlashPause , ___                  , ___            , ___             , ___,
+   LockLayer(GAMING)                         , ___          , ___                     , ___                  ,
+   ___),
+
+  [GAMING] = KEYMAP_STACKED
+  (Key_Backtick  , Key_1      , Key_2    , Key_3 , Key_4                    , Key_5, Key_6           ,
+   Key_Tab       , Key_Q      , Key_W    , Key_E , Key_R                    , Key_T, Key_LeftBracket ,
+   Key_Escape    , Key_A      , Key_S    , Key_D , Key_F                    , Key_G,
+   Key_LeftShift , Key_Z      , Key_X    , Key_C , Key_V                    , Key_B, Key_LeftParen   ,
+   Key_LeftAlt   , Key_Spacebar, Key_LeftShift, ShiftToLayer(FUNCTION),
+   ShiftToLayer(GAMING_RIGHT),
+
+   Key_7            , Key_8     , Key_9       , Key_0     , Key_Minus    , Key_Equals , Key_Backspace  ,
+   Key_RightBracket , Key_Y     , Key_U       , Key_I     , Key_O        , Key_P      , Key_Backslash  ,
+   Key_H            , Key_J     , Key_K       , Key_L     , Key_Semicolon, Key_Quote  ,
+   Key_RightParen   , Key_N     , Key_M       , Key_Comma , Key_Period   , Key_Slash  , Key_RightShift ,
+   ___              , Key_Enter , Key_Spacebar, Key_RightAlt,
+   ShiftToLayer(FUNCTION)),
+
+  [GAMING_RIGHT] = KEYMAP_STACKED
+  (Key_Backtick  , Key_1      , Key_2    , Key_3 , Key_4                    , Key_5, Key_6           ,
+   Key_Tab       , Key_Q      , Key_W    , Key_E , Key_R                    , Key_T, Key_LeftBracket ,
+   Key_Escape    , Key_A      , Key_S    , Key_D , Key_F                    , Key_G,
+   Key_LeftShift , Key_Z      , Key_X    , Key_C , Key_V                    , Key_B, Key_LeftParen   ,
+   Key_LeftAlt   , Key_Spacebar, Key_LeftShift, ShiftToLayer(FUNCTION),
+   ___,
+
+   Key_7            , Key_8     , Key_9       , Key_0     , Key_Minus    , Key_Equals , Key_Backspace  ,
+   Key_RightBracket , Key_Y     , Key_U       , Key_I     , Key_O        , Key_P      , Key_Backslash  ,
+   Key_H            , Key_J     , Key_K       , Key_L     , Key_Semicolon, Key_Quote  ,
+   Key_RightParen   , Key_N     , Key_M       , Key_Comma , Key_Period   , Key_Slash  , Key_RightShift ,
+   LockLayer(PRIMARY)              , Key_Enter , Key_Spacebar, Key_RightAlt,
+   ___),
 
   [NUMPAD] =  KEYMAP_STACKED
   (___, ___, ___, ___, ___, ___, ___,
@@ -253,26 +297,11 @@ KEYMAPS(
    ___, ___, ___, ___,
    ___,
 
-   M(MACRO_VERSION_INFO),  ___, Key_7, Key_8,      Key_9,              Key_KeypadSubtract, ___,
-   ___,                    ___, Key_4, Key_5,      Key_6,              Key_KeypadAdd,      ___,
-                           ___, Key_1, Key_2,      Key_3,              Key_Equals,         ___,
-   ___,                    ___, Key_0, Key_Period, Key_KeypadMultiply, Key_KeypadDivide,   Key_Enter,
-   ___, ___, ___, ___,
-   ___),
-
-  [FUNCTION] =  KEYMAP_STACKED
-  (___, Key_F1, Key_F2, Key_F3                 , Key_F4         , Key_F5, Key_F6,
-   ___, ___   , ___   , ___                    , ___            , ___   , ___   ,
-   ___, ___   , ___   , LCTRL(LSHIFT(Key_Tab)) , LCTRL(Key_Tab) , ___   ,
-   ___, ___   , ___   , ___                    , ___            , ___   , ___   ,
-   ___, ___   , ___   , ___                    ,
-   ___,
-
-   Key_F7                      , Key_F8       , Key_F9                  , Key_F10              , Key_F11        , Key_F12         , ___,
-   ___                         , ___          , Key_LeftCurlyBracket    , Key_RightCurlyBracket, Key_LeftBracket, Key_RightBracket, ___,
-                  Key_LeftArrow, Key_DownArrow, Key_UpArrow             , Key_RightArrow       ,  ___           , ___             ,
-   ___                         , ___          , Consumer_PlaySlashPause , ___                  , ___            , ___             , ___,
-   ___                         , ___          , ___                     , ___                  ,
+   M(MACRO_VERSION_INFO), ___  , ___  , ___  , ___  , ___, ___,
+   ___                  , ___  , Key_7, Key_8, Key_9, ___, ___,
+                          ___  , Key_4, Key_5, Key_6, ___, ___,
+   ___                  , ___  , Key_1, Key_2, Key_3, ___, ___,
+   ___                  , ___  , ___  , Key_0,
    ___)
 ) // KEYMAPS(
 
@@ -488,7 +517,7 @@ KALEIDOSCOPE_INIT_PLUGINS(
   LEDPaletteTheme,
 
   // The Colormap effect makes it possible to set up per-layer colormaps
-  ColormapEffect,
+  // ColormapEffect,
 
   // The numpad plugin is responsible for lighting up the 'numpad' mode
   // with a custom LED effect
@@ -537,8 +566,8 @@ void setup() {
   // The LED Stalker mode has a few effects. The one we like is called
   // 'BlazingTrail'. For details on other options, see
   // https://github.com/keyboardio/Kaleidoscope/blob/master/doc/plugin/LED-Stalker.md
-  // StalkerEffect.variant = STALKER(BlazingTrail);
-  StalkerEffect.variant = STALKER(Haunt, (CRGB(0, 0, 200)));
+  StalkerEffect.variant = STALKER(BlazingTrail);
+  // StalkerEffect.variant = STALKER(Haunt, (CRGB(0, 0, 200)));
   StalkerEffect.activate();
 
   // We want to make sure that the firmware starts with LED effects off
@@ -556,12 +585,16 @@ void setup() {
   // We need to tell the Colormap plugin how many layers we want to have custom
   // maps for. To make things simple, we set it to five layers, which is how
   // many editable layers we have (see above).
-  ColormapEffect.max_layers(5);
+  // ColormapEffect.max_layers(5);
+  // ColormapEffect.activate();
 
   QUKEYS(
-    kaleidoscope::plugin::Qukey(0, KeyAddr(2, 0), Key_LeftControl),  // Escape/Ctrl
-    kaleidoscope::plugin::Qukey(0, KeyAddr(2, 15), Key_RightControl),  // Quote/Ctrl
-    kaleidoscope::plugin::Qukey(0, KeyAddr(1, 8), Key_Hyper),        // Space/Hyper
+    kaleidoscope::plugin::Qukey(PRIMARY, KeyAddr(2, 0), Key_LeftControl),  // Escape/Ctrl
+    kaleidoscope::plugin::Qukey(PRIMARY, KeyAddr(2, 15), Key_RightControl),  // Quote/Ctrl
+    kaleidoscope::plugin::Qukey(PRIMARY, KeyAddr(1, 8), Key_Hyper),        // Space/Hyper
+    kaleidoscope::plugin::Qukey(GAMING, KeyAddr(2, 0), Key_LeftControl),  // Escape/Ctrl
+    kaleidoscope::plugin::Qukey(GAMING, KeyAddr(2, 15), Key_RightControl),  // Quote/Ctrl
+    kaleidoscope::plugin::Qukey(GAMING, KeyAddr(1, 8), Key_Hyper),        // Space/Hyper
          );
 }
 

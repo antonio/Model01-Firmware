@@ -302,7 +302,7 @@ KEYMAPS(
    Key_Escape    , Key_A       , Key_S        , Key_D                 , Key_F , Key_G,
    Key_LeftShift , Key_Z       , Key_X        , Key_C                 , Key_V , Key_B, Key_LeftParen   ,
    Key_LeftAlt   , Key_Spacebar, Key_LeftShift, ShiftToLayer(FUNCTION),
-   ___
+   UnlockLayer(GAMING)
    ),
 
   [GAMING_FN] =  KEYMAP_STACKED
@@ -310,7 +310,7 @@ KEYMAPS(
    Key_F7            , Key_F8, Key_F9, Key_F10, Key_F11, Key_F12, Key_Delete,
    Key_Escape        , ___   , ___   , ___    , ___    , ___    ,
    ___               , ___   , ___   , ___    , ___    , ___    , ___       ,
-   LockLayer(PRIMARY), ___   , ___   , ___    ,
+   ___, ___   , ___   , ___    ,
    ___,
 
    ___, ___, ___, ___, ___, ___, ___,
